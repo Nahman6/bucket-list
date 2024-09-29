@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bucket-list</title>
+    <link rel="stylesheet" href="todo.css" />
+  </head>
+  <body>
+    <input type="checkbox" id="darkmode-toggle" />
+    <label for="darkmode-toggle"> </label>
+    <div class="background"></div>
+    <!--app starts here-->
+
+    <div class="container">
+      <div class="stats_cont">
+        <div class="details">
+          <div id="text">
+            <h1>Bucket List</h1>
+            <p>You Got This!</p>
+          </div>
+          <div id="progressBar">
+            <div id="progress"></div>
+          </div>
+        </div>
+        <div class="stats_num">
+          <p id="numbers">2/3</p>
+        </div>
+      </div>
+
+      <form action="">
+        <input type="text" placeholder="write your tasks here" />
+        <button type="submit">+</button>
+      </form>
+
+      <ul class="task-list"></ul>
+    </div>
+    <script src="./todo.js"></script>
+  </body>
+</html>
