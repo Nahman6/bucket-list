@@ -1,43 +1,3 @@
-let tasks = [];
-const addTask = () => {
-  const taskInput = document.getElementById("taskInput");
-  const text = taskInput.value.trim();
-
-  if (text) {
-    tasks.push({ text: text, completed: false });
-    updateTasksList();
-  }
-};
-const taskList = document.getElementById("task-list");
-const updateTasksList = () => {
-  taskList.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const listItem = document.createElement("li");
-    listItem.innerHTML = `
-    <div class="taskItem">
-    <div class="task ${task.completed ? "completed" : ""}">
-        <input type="check" class="checkbox" ${
-          task.completed ? "checked" : ""
-        }/>
-        <p>${task.text}</p>
-    </div>
-    <div class="icons">
-        <img src="./signature.png" class="size" onClick="editTask(${index})"/>
-        <img src="./saving.png" class="size" onClick="deleteTask(${index})"/>
-    </div>
-</div>
-`;
-
-    listItem.addEventListener("change", () => toggleTaskComplete(index));
-    taskList.append(listItem);
-  });
-};
-
-document.getElementById("newTask").addEventListener("click", function (e) {
-  e.preventDefault();
-  addTask();
-});
-
 const darkModeToggle = document.getElementById("darkmode-toggle");
 const background = document.querySelector(".background");
 const form = document.querySelector("form");
@@ -50,10 +10,52 @@ darkModeToggle.addEventListener("change", () => {
   }
 });
 
+const taskInput = document.getElementById("task-input");
+const taskList = document.getElementById("task-list");
+
 form.addEventListener("submit", (event) => {
   // Prevent default form submission behavior
   event.preventDefault();
   form.reset();
 });
 
-//.
+function addTask() {
+  if (taskInput.value === "") {
+    alert("You must write something!");
+  } else {
+    let li = document.createElement("li");
+    li.innerHTML = taskInput.value;
+    taskList.appendChild(li);
+
+    const span = document.createElement("span");
+    const img = document.createElement("img");
+    img.id = "myImage";
+    img.src = "saving.png";
+    span.appendChild(img);
+    li.appendChild(span);
+    saveData();
+  }
+  taskInput = "";
+}
+taskList.addEventListener(
+  "click",
+  function (e) {
+    if (e.target.tagName === "LI") {
+      e.target.classList.toggle("checked");
+      saveData();
+    } else if (e.target.id === "SPAN") {
+      e.target.parentElement.remove();
+      saveData();
+    }
+  },
+  false
+);
+
+function saveData() {
+  localStorage.setItem("data", taskList.innerHTML); //name,what u want to save
+}
+
+function showTask() {
+  taskList.innerHTML = localStorage.getItem("data");
+}
+saveData();
